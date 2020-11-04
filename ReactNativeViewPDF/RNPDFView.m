@@ -93,13 +93,8 @@
             [webview loadRequest: request];
         }
     } else if ([self isFileResource]) {
-        NSURL *fileURL = [self getFileURL];
-        if (fileURL == nil) {
-            [self throwError: ERROR_ONLOADING withMessage: ERROR_MESSAGE_FILENOTFOUND];
-            return;
-        }
-
-        [webview loadFileURL: fileURL allowingReadAccessToURL: fileURL];
+        NSURL *url = [NSURL URLWithString:_resource];
+        [webview loadFileURL: url allowingReadAccessToURL: url];
     } else {
         NSString *characterEncodingName = [_textEncoding isEqual: UTF_16] ? UTF_16 : UTF_8;
         NSData *base64Decoded = [[NSData alloc] initWithBase64EncodedString: _resource options: NSDataBase64DecodingIgnoreUnknownCharacters];
